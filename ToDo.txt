@@ -1,0 +1,85 @@
+!!!!!!!!!!!!!!!!!!!! TO DO !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+BackOffice
+    _Gestion Offre (mongo)
+        _Liste operateurs(mongo)
+        _Offre,frais varie selon l'operateur
+    _Credit
+        POSTGRES
+    _Tableau Statistique
+    _Validatoin depot mobile money
+
+Front
+    _Inscription
+    _Login
+    _historique appels
+
+Mobile
+    _Simuler Appel
+    _Acheter Offre via mobile Money
+        _
+    _Faire depot mobile money
+    _mon compte(infos)
+
+!!!!!!!!!!!!!!!!!!!! TABLES !!!!!!!!!!!!!!!!!!!!!!!
+    Mongo
+        _user(id,nom,numero,pass)
+        _admin(id,nom,pass)
+        
+    PostgreSQL
+!!!!!!!!!!! VALEUR EN AR (Appel) !!!!!!!
+	_operateur(id,id_operateur,nom)
+	_offre(id,nom,priorite)
+		_dataOffre(idOffre,Nom,valeur)
+			ex=(idOffre,internet,10)
+    _TypeInfo(id,nom,type)  (0,facebobaka,internet),(0,Appel,Appel),(2,internet,internet),(3,SMS,SMS)
+    _TarifCredit(id,idTypeInfo,destination,nom,valeur)
+        (0,0,"meme operateur","Appel",10)  (Ar/seconde)
+        (1,0,"autre operateur","Appel",20) (Ar/seconde)
+        (2,0,"meme operateur","SMS",80)    (en Ar)
+        (3,0,"autre operateur","SMS",160)  (en Ar)
+        (4,0,"null","internet",100)  (Ar/par Mo)
+	_Tarif(id,idOffre,,destination,nom,valeur)   (VALEUR AR/seconde SI APPEL, isany raha sms sy internet)
+		_ex : (id,idOffre,memeOperateur,Appel,1)
+		      (id,idOffre,autreOperateur,Appel,3)
+		      (id,idOffre,"*",Internet,3)
+		      (id,idOffre,memeOperateur,SMS,1)
+		      (id,idOffre,autreOperateur,SMS,2)
+        _Transfert(id,iduser,type,date)  (type=depot,achat credit/offre)
+        _MobileMoneyReel(id,idClient,MontantReel,Date)
+        _CreditReel(id,idClient,MontantCreditReel,Date)
+        _ForaitAchete(id,iduser,idOffre,dateAchat)
+        _ForfaitReel(id,idForfaitAchete,type,reste)  (type=internet/appel/sms)
+            (Liste forfait En cours = (ForfaitAchete.dateAchat) - (offre.duree) )
+            (rehefa mividy forfait, minsert Forfait Reel en mm temps) 
+        _Appel(id,idCalliing,idCalled,duree)
+
+!!!!!!!!!!!!! ALGO !!!!!!!!!!!!
+    Etapes lors d'un appel :
+        _check raha misy forfait en cours
+            _raha misy => mitohy
+            _raha tsisy dia mijery credit
+                -raha tsy misy credit = erreur ("pas assez de credit")
+                -raha misy => mitohy
+        _check raha mitovy ny operateur
+            -raha meme operateur:
+                _tarif mmoperateur(credit/offre) => mitohhy
+            _raha tsy mitovy op:
+                _tarif Diff OP (credit/offre)   => mitohy
+        _
+
+
+
+
+
+
+
+
+
+
+
+
+
+!!!!!!!!!!! NOTE !!!!!!!!!!!!!!!!!!!!!
+script manadio base ; 
+creer offre (Test 2000Ar); (20mo,20sms,1000Ar Appel)
+Simuler Appel(5min)
