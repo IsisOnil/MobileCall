@@ -1,16 +1,12 @@
 package com.mobile.mobile.model;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.mobile.mobile.util.*;
 
-import lombok.val;
-
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.ProcessHandle.Info;
 import java.sql.Connection;
 
 import javax.persistence.Column;
